@@ -43,6 +43,7 @@ void game(vector<string> male_names, vector<string>female_names, Bunny rabbits[]
 		for (int i = 0; i < 1000; i++) {
 			if (rabbits[i].get_age() != 0) {
 				/*
+				Bypassing speeds processing
 				cout << rabbits[i].get_name() << "\t" << endl;
 				cout << "Sex: " << rabbits[i].get_sex() << " | ";
 				cout << "Age: " << rabbits[i].get_age() << " | ";

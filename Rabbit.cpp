@@ -1,3 +1,4 @@
+#include "Bunny.h"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -5,23 +6,21 @@
 #include <vector>
 #include <fstream>
 #include <iomanip>
-#include "Bunny.h"
 
-using namespace std;
 
-void new_rabbit(int, Bunny[], vector<string>, vector<string>);
-void game(vector<string>, vector<string>, Bunny[]);
-void name_generator(vector<string>&, vector<string>&);
-string new_name(char, vector<string>, vector<string>);
+void new_rabbit(int, Bunny[], std::vector<std::string>, std::vector<std::string>);
+void game(std::vector<std::string>, std::vector<std::string>, Bunny[]);
+void name_generator(std::vector<std::string>&, std::vector<std::string>&);
+std::string new_name(char, std::vector<std::string>, std::vector<std::string>);
 void cull(Bunny[], int&, int&);
-void write_to_file(Bunny[], ofstream);
+void write_to_file(Bunny[], std::ofstream);
 
 
 int main() {
 	srand(time(NULL));
 
-	vector<string> male_names;
-	vector<string> female_names;
+	std::vector<std::string> male_names;
+	std::vector<std::string> female_names;
 	Bunny rabbits[1000];
 
 
@@ -29,33 +28,33 @@ int main() {
 	system("pause");
 }
 
-void game(vector<string> male_names, vector<string>female_names, Bunny rabbits[]) {
+void game(std::vector<std::string> male_names, std::vector<std::string>female_names, Bunny rabbits[]) {
 	name_generator(male_names, female_names);
 	new_rabbit(10, rabbits, male_names, female_names);
 	int counter = 0, deaths = 0;
 	//char input;
-	ofstream stats;
+	std::ofstream stats;
 	stats.open("stats.txt");
 	do {
 		int male_count = 0, female_count = 0, age = 0, total = 0, dead = 0, mutant = 0;
-		//cout << "\n\n\t\tRound " << counter << endl;
-		stats << endl << "Round " << counter << endl;
+		//std::cout << "\n\n\t\tRound " << counter << std::endl;
+		stats << std::endl << "Round " << counter << std::endl;
 		for (int i = 0; i < 1000; i++) {
 			if (rabbits[i].get_age() != 0) {
 				/*
 				Bypassing speeds processing
-				cout << rabbits[i].get_name() << "\t" << endl;
-				cout << "Sex: " << rabbits[i].get_sex() << " | ";
-				cout << "Age: " << rabbits[i].get_age() << " | ";
-				cout << "Color: " << rabbits[i].get_color() << " | ";
-				cout << "Mutant: " << rabbits[i].get_mutant() << endl;
-				cout << endl << endl;
+				std::cout << rabbits[i].get_name() << "\t" << std::endl;
+				std::cout << "Sex: " << rabbits[i].get_sex() << " | ";
+				std::cout << "Age: " << rabbits[i].get_age() << " | ";
+				std::cout << "Color: " << rabbits[i].get_color() << " | ";
+				std::cout << "Mutant: " << rabbits[i].get_mutant() << std::endl;
+				std::cout << std::endl << std::endl;
 				*/
-				stats << rabbits[i].get_name() << endl;
-				stats << rabbits[i].get_sex() << endl;
-				stats << rabbits[i].get_age() << endl;
-				stats << rabbits[i].get_color() << endl;
-				stats << rabbits[i].get_mutant() << endl;
+				stats << rabbits[i].get_name() << std::endl;
+				stats << rabbits[i].get_sex() << std::endl;
+				stats << rabbits[i].get_age() << std::endl;
+				stats << rabbits[i].get_color() << std::endl;
+				stats << rabbits[i].get_mutant() << std::endl;
 				total++;
 
 				if (rabbits[i].get_sex() == 'm') {
@@ -91,7 +90,7 @@ void game(vector<string> male_names, vector<string>female_names, Bunny rabbits[]
 			cull(rabbits, total, deaths);
 		}
 		else if (male_count == 0) {
-			cout << "GAME OVER" << endl;
+			std::cout << "GAME OVER" << std::endl;
 			return;
 		}
 		/*
@@ -104,11 +103,11 @@ void game(vector<string> male_names, vector<string>female_names, Bunny rabbits[]
 
 		/*/  Speeds up the program writing directly to file
 
-		cout << "Total: " << total << endl;
-		cout << "Deaths: " << deaths << endl;
-		cout << "Mutants: " << mutant << endl;
-		cout << "Male: " << male_count << endl;
-		cout << "Female: " << female_count << endl;
+		std::cout << "Total: " << total << std::endl;
+		std::cout << "Deaths: " << deaths << std::endl;
+		std::cout << "Mutants: " << mutant << std::endl;
+		std::cout << "Male: " << male_count << std::endl;
+		std::cout << "Female: " << female_count << std::endl;
 		*/
 		counter++;
 
@@ -116,10 +115,10 @@ void game(vector<string> male_names, vector<string>female_names, Bunny rabbits[]
 		//system("pause");
 	} while (counter < 20);
 	stats.close();
-	cout << "Simulation Finished" << endl;
+	std::cout << "Simulation Finished" << std::endl;
 }
 
-string new_name(char s, vector<string> male_names, vector<string> female_names) {
+std::string new_name(char s, std::vector<std::string> male_names, std::vector<std::string> female_names) {
 	if (s == 'm') {
 		return male_names.at(rand() % 50);
 	}
@@ -128,22 +127,22 @@ string new_name(char s, vector<string> male_names, vector<string> female_names) 
 	}
 }
 
-void name_generator(vector<string>& male_names, vector<string>& female_names) {
-	ifstream male, female;
+void name_generator(std::vector<std::string>& male_names, std::vector<std::string>& female_names) {
+	std::ifstream male, female;
 
 	male.open("male.txt");
-	for (string name; getline(male, name);) {
+	for (std::string name; getline(male, name);) {
 		male_names.push_back(move(name));
 	}
 	female.open("female.txt");
-	for (string name; getline(female, name);) {
+	for (std::string name; getline(female, name);) {
 		female_names.push_back(move(name));
 	}
 	male.close();
 	female.close();
 }
 
-void new_rabbit(int n, Bunny rabbits[], vector<string> male_names, vector<string> female_names) {
+void new_rabbit(int n, Bunny rabbits[], std::vector<std::string> male_names, std::vector<std::string> female_names) {
 
 	for (int i = 0; i < n; i++) {
 		int c, s, m;

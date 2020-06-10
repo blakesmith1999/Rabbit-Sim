@@ -3,14 +3,13 @@
 
 #include <iostream>
 #include <string>
-using namespace std;
 
 class Bunny {
 private:
 	char sex;
 	int age;
-	string color;
-	string name;
+	std::string color;
+	std::string name;
 	bool radioactive_mutant_vampire_bunny;
 
 public:
@@ -18,13 +17,13 @@ public:
 	void set_sex(int);
 	void set_age(int);
 	void set_color(int);
-	void set_name(string);
+	void set_name(std::string);
 	void set_mutant(int);
 	char get_sex();
 	int get_age();
-	string get_color();
-	string get_name();
-	string get_mutant();
+	std::string get_color();
+	std::string get_name();
+	std::string get_mutant();
 
 };
 
@@ -63,7 +62,7 @@ void Bunny::set_color(int c) {
 	}
 }
 
-void Bunny::set_name(string n) {
+void Bunny::set_name(std::string n) {
 	name = n;
 }
 
@@ -84,15 +83,15 @@ int Bunny::get_age() {
 	return age;
 }
 
-string Bunny::get_color() {
+std::string Bunny::get_color() {
 	return color;
 }
 
-string Bunny::get_name() {
+std::string Bunny::get_name() {
 	return name;
 }
 
-string Bunny::get_mutant() {
+std::string Bunny::get_mutant() {
 	if (radioactive_mutant_vampire_bunny)
 		return "true";
 	else
